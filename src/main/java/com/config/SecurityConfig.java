@@ -36,7 +36,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .jdbcAuthentication()
                 .dataSource(dataSource)
                 .usersByUsernameQuery("SELECT tb_username, tb_password, enabled From tb_user WHERE tb_username=?")
-                .authoritiesByUsernameQuery("select tb_username, role from tb_role where tb_username=?");
+                .authoritiesByUsernameQuery("SELECT u.tb_username, r.role_name FROM tb_user_role ur LEFT JOIN tb_user u " +
+                        "ON ur.user_id = u.id LEFT JOIN tb_role r ON ur.role_id = r.id WHERE u.tb_username =?");
     }
 
 
@@ -60,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/hello").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/hello").access("hasRole('ADMIN')")
                 .anyRequest().authenticated().and()
                 .formLogin().loginPage("/login").permitAll().and()
                 .csrf().disable();
