@@ -48,7 +48,7 @@ public class JpaConfig {
         jpaProperties.put("hibernate.show_sql",true);
 
         //如果该属性的值为true, Hibernate将格式化写入控制台的SQL。
-        jpaProperties.put("hibernate.format_sql", true);
+        //jpaProperties.put("hibernate.format_sql", true);
 
         entityManagerFactoryBean.setJpaProperties(jpaProperties);
         entityManagerFactoryBean.afterPropertiesSet();
